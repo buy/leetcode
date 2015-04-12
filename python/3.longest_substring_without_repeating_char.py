@@ -15,3 +15,6 @@ class Solution:
                 maxNum = max(maxNum, i - start + 1)
         
         return maxNum
+
+s = Solution()
+print s.lengthOfLongestSubstring('tmmzuxt')
