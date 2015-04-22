@@ -15,8 +15,13 @@ class Solution:
             if s[:2] in ROMAN_INT:
                 result += ROMAN_INT[s[:2]]
                 s = s[2:]
-            else:
+            elif s[:1] in ROMAN_INT:
                 result += ROMAN_INT[s[:1]]
                 s = s[1:]
+            else:
+                return -1
 
         return result
+
+s = Solution()
+print s.romanToInt('XIB')
