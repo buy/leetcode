@@ -14,33 +14,34 @@
 # [1, 1, 6] 
 
 class Solution:
-    # @param candidates, a list of integers
-    # @param target, integer
-    # @return a list of lists of integers
-    # 11:17
-    def __init__(self):
-        self.output = []
+    # @param {integer[]} candidates
+    # @param {integer} target
+    # @return {integer[][]}
+    # 11:53
+    def combinationSum2(self, candidates, target):
+        if not candidates or target is None:
+            return []
 
-    def combinationSum2(self, candidates, target, temp = None, pos = 0):
-        if temp is None:
-            candidates.sort()
-        temp = temp or []
+        candidates.sort()
+        result = []
+        self.getCombination(candidates, target, result, [])
+        return result
 
+    def getCombination(self, candidates, target, result, temp, pos = 0):
         if target == 0:
-            self.output.append(temp[:])
+            result.append(temp[:])
             return
 
         last = None
         for i in range(pos, len(candidates)):
-            num = candidates[i]
-            if target - num < 0:
-                break
-            if last == num:
+            if last == candidates[i]:
                 continue
 
-            last = num
-            temp.append(num)
-            self.combinationSum2(candidates, target - num, temp, i + 1)
+            newTarget = target - candidates[i]
+            if newTarget < 0:
+                return
+
+            last = candidates[i]
+            temp.append(candidates[i])
+            self.getCombination(candidates, newTarget, result, temp, i + 1)
             temp.pop()
-        
-        return self.output

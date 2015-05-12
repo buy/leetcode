@@ -5,29 +5,29 @@
 # [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
 
 class Solution:
-    # @param num, a list of integer
-    # @return a list of lists of integers
-    # 11:44
-    def permute(self, num):
-        output = []
-        flags = [False] * len(num)
-        
-        self.permuteForReal(num, output, flags)
-        
-        return output
-    
-    def permuteForReal(self, num, output, flags, temp = None):
-        temp = temp or []
-        if len(temp) == len(num):
-            output.append(temp[:])
+    # @param {integer[]} nums
+    # @return {integer[][]}
+    # 5:56
+    def permute(self, nums):
+        if not nums:
+            return []
+
+        result, flags = [], [False] * len(nums)
+        self.getPermutation(nums, result, flags, [])
+
+        return result
+
+    def getPermutation(self, nums, result, flags, temp):
+        if len(temp) == len(nums):
+            result.append(temp[:])
             return
 
-        for i in range(len(num)):
+        for i in range(len(nums)):
             if flags[i]:
                 continue
-            else:
-                temp.append(num[i])
-                flags[i] = True
-                self.permuteForReal(num, output, flags, temp)
-                temp.pop()
-                flags[i] = False
+
+            flags[i] = True
+            temp.append(nums[i])
+            self.getPermutation(nums, result, flags, temp)
+            temp.pop()
+            flags[i] = False
