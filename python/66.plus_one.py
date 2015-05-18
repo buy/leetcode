@@ -3,20 +3,16 @@
 # The digits are stored such that the most significant digit is at the head of the list.
 
 class Solution:
-    # @param digits, a list of integer digits
-    # @return a list of integer digits
+    # @param {integer[]} digits
+    # @return {integer[]}
     def plusOne(self, digits):
-        num = 0
-        for d in digits:
-            num *= 10
-            num += d
+        result, carry = [], 1
+        for num in digits[::-1]:
+            temp = num + carry
+            carry = 1 if temp / 10 else 0
+            result.append(temp % 10)
 
-        num += 1
-        output = []
+        if carry:
+            result.append(carry)
 
-        while num:
-            temp = num % 10
-            num /= 10
-            output.append(temp)
-
-        return output[::-1]
+        return result[::-1]

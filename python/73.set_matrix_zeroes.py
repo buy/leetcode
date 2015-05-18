@@ -6,12 +6,10 @@
 # Could you devise a constant space solution?
 
 class Solution:
-    # @param matrix, a list of lists of integers
-    # @return nothing (void), do not return anything, MODIFY matrix IN PLACE.
-    # 12:35
+    # @param {integer[][]} matrix
+    # @return {void} Do not return anything, modify matrix in-place instead.
     def setZeroes(self, matrix):
-        zeroRows = set()
-        zeroCols = set()
+        zeroRows, zeroCols = set(), set()
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 if matrix[i][j] == 0:
@@ -19,8 +17,8 @@ class Solution:
                     zeroCols.add(j)
 
         for row in zeroRows:
-            matrix[row][:] = map(lambda x:0, matrix[row])
+            matrix[row] = map(lambda x: 0, matrix[row])
 
-        for i in range(len(matrix)):
-            for col in zeroCols:
+        for col in zeroCols:
+            for i in range(len(matrix)):
                 matrix[i][col] = 0

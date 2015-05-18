@@ -21,21 +21,21 @@ class Solution:
         slow = fast = head
         length = 1
 
-        while k and fast.next:
+        while fast and fast.next:
             fast = fast.next
             length += 1
-            k -= 1
-        
-        if k != 0:
-            k = (k + length - 1) % length # original k % length
-            return self.rotateRight(head, k)
-        else:
-            while fast.next:
-                fast = fast.next
-                slow = slow.next
-            return self.rotate(head, fast, slow)
 
-    def rotate(self, head, fast, slow):
+        k %= length
+        fast = head
+
+        while k:
+            fast = fast.next
+            k -= 1
+
+        while fast and fast.next:
+            fast = fast.next
+            slow = slow.next
+
         fast.next = head
         head = slow.next
         slow.next = None

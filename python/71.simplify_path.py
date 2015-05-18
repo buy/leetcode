@@ -13,19 +13,15 @@
 
 
 class Solution:
-    # @param path, a string
-    # @return a string
+    # @param {string} path
+    # @return {string}
     def simplifyPath(self, path):
-        path = filter(lambda x: x, path.split('/'))
-        output = []
+        stack = []
+        path = filter(lambda x: x and x != '.', path.split('/'))
+        for p in path:
+            if p != '..':
+                stack.append(p)
+            elif stack:
+                stack.pop()
 
-        for section in path:
-            if section == '.':
-                continue
-            elif section == '..':
-                if output:
-                    output.pop()
-            else:
-                output.append(section)
-        
-        return '/' + '/'.join(output)
+        return '/' + '/'.join(stack)
