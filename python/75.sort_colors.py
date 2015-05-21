@@ -14,19 +14,18 @@
 # Could you come up with an one-pass algorithm using only constant space?
 
 class Solution:
-    # @param A a list of integers
-    # @return nothing, sort in place
-    # 11:37
-    def sortColors(self, A):
-        i, j, n = 0, 0, len(A) - 1
+    # @param {integer[]} nums
+    # @return {void} Do not return anything, modify nums in-place instead.
+    def sortColors(self, nums):
+        i, j, n = 0, 0, len(nums) - 1
 
         while j <= n:
-            if A[j] < 1:
-                A[i], A[j] = A[j], A[i]
+            if nums[j] < 1:
+                nums[i], nums[j] = nums[j], nums[i]
                 i += 1
                 j += 1
-            elif A[j] > 1:
-                A[j], A[n] = A[n], A[j]
+            elif nums[j] > 1:
+                nums[j], nums[n] = nums[n], nums[j]
                 n -= 1
             else:
                 j += 1

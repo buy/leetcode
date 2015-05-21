@@ -14,26 +14,25 @@
 # Given target = 3, return true.
 
 class Solution:
-    # @param matrix, a list of lists of integers
-    # @param target, an integer
-    # @return a boolean
-    # 8:21
+    # @param {integer[][]} matrix
+    # @param {integer} target
+    # @return {boolean}
     def searchMatrix(self, matrix, target):
-        if not matrix or target is None:
+        rows = len(matrix)
+        if rows == 0:
             return False
 
-        rows, cols = len(matrix), len(matrix[0])
-        low, high = 0, rows * cols - 1
+        cols = len(matrix[0])
+        i, j = 0, rows * cols - 1
 
-        while low <= high:
-            mid = (low + high) / 2
+        while i <= j:
+            mid = (i + j) / 2
             num = matrix[mid / cols][mid % cols]
-
             if num == target:
                 return True
-            elif num < target:
-                low = mid + 1
+            elif num > target:
+                j = mid - 1
             else:
-                high = mid - 1
+                i = mid + 1
 
         return False
