@@ -16,17 +16,22 @@
 # For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
 
 class Solution:
-    # @return a list of integers
-    # 7:35
-    def grayCode(self, n):
-        temp = ['0', '1']
-        while n > 1:
-            left = map(lambda x: '0'+ x, temp)
-            right = map(lambda x: '1'+ x, temp[::-1])
-            temp = left + right
-            n -= 1
+    # @param {integer} n
+    # @return {integer[]}
+    # 9:25
+    BASE = ['0', '1']
 
-        return map(lambda x: int(x, 2), temp)
+    def grayCode(self, n):
+        if n == 0:
+            return [0]
+
+        result = Solution.BASE
+        for i in range(n - 1):
+            left = map(lambda x: '0' + x, result)
+            right = map(lambda x: '1' + x, result[::-1])
+            result = left + right
+
+        return result
 
 s = Solution()
 print s.grayCode(3)

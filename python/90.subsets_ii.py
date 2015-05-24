@@ -16,25 +16,26 @@
 # ]
 
 class Solution:
-    # @param num, a list of integer
-    # @return a list of lists of integer
-    # 1:02
-    def __init__(self):
-        self.output = []
+    # @param {integer[]} nums
+    # @return {integer[][]}
+    # 9:51
+    def subsetsWithDup(self, nums):
+        result, usedSets = [], {}
+        nums.sort()
+        self.findSubsets(nums, result, usedSets, [])
 
-    def subsetsWithDup(self, S, pos = 0, temp = None):
-        temp = temp or []
-        S.sort()
+        return result
 
-        if temp not in self.output:
-          self.output.append(temp[:])
+    def findSubsets(self, nums, result, usedSets, temp, pos = 0):
+        tupledTemp = tuple(temp)
+        if not tupledTemp in usedSets:
+            result.append(temp[:])
+            usedSets[tupledTemp] = True
 
-        for i in range(pos, len(S)):
-            temp.append(S[i])
-            self.subsetsWithDup(S, i+1, temp)
+        for i in range(pos, len(nums)):
+            temp.append(nums[i])
+            self.findSubsets(nums, result, usedSets, temp, i + 1)
             temp.pop()
-
-        return self.output
 
 s = Solution()
 print s.subsetsWithDup([1,2,2])

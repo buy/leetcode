@@ -13,28 +13,33 @@
 #         self.val = x
 #         self.next = None
 
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
 class Solution:
-    # @param head, a ListNode
-    # @param x, an integer
-    # @return a ListNode
-    # 8:21
+    # @param {ListNode} head
+    # @param {integer} x
+    # @return {ListNode}
     def partition(self, head, x):
-        s = smallList = ListNode(0)
-        b = bigList = ListNode(0)
-        
-        temp = head
-        
+        if not head:
+            return None
+
+        less, greaterEqual = ListNode(0), ListNode(0)
+        tempLess, tempGreaterEqual, temp = less, greaterEqual, head
         while temp:
+            if temp.val < x:
+                tempLess.next = temp
+                tempLess = tempLess.next
+            else:
+                tempGreaterEqual.next = temp
+                tempGreaterEqual = tempGreaterEqual.next
+
             cur = temp
             temp = temp.next
             cur.next = None
-            if cur.val < x:
-                s.next = cur
-                s = s.next
-            else:
-                b.next = cur
-                b = b.next
 
-            s.next = bigList.next
-        
-        return smallList.next
+        tempLess.next = greaterEqual.next
+        return less.next

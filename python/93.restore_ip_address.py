@@ -5,6 +5,8 @@
 
 # return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
 
+import re
+
 class Solution:
     # @param s, a string
     # @return a list of strings
@@ -29,3 +31,6 @@ class Solution:
             temp.append(s[:i])
             self.findSection(s[i:], output, temp)
             temp.pop()
+
+s = Solution()
+print s.restoreIpAddresses('25525511155')

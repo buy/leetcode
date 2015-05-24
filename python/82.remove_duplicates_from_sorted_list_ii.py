@@ -10,29 +10,35 @@
 #         self.val = x
 #         self.next = None
 
-class Solution:
-    # @param head, a ListNode
-    # @return a ListNode
-    # 6:57
-    def deleteDuplicates(self, head):
-        dummyHead = ListNode(0)
-        dummyHead.next = head
-        
-        last = dummyHead
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
-        while last and last.next:
-            if last.next and last.next.next and last.next.val == last.next.next.val:
-                self.removeDuplicate(last)
+class Solution:
+    # @param {ListNode} head
+    # @return {ListNode}
+    # 8:21
+    def deleteDuplicates(self, head):
+        if not head:
+            return None
+
+        dummyHead = ListNode(0)
+        dummyHead.next, last = head, dummyHead
+
+        while last.next and last.next.next:
+            if last.next.val == last.next.next.val:
+                self.removeDuplicates(last)
             else:
                 last = last.next
 
         return dummyHead.next
 
-    def removeDuplicate(self, last):
-        start = last.next
-        end = last.next.next
-        
-        while end.next and end.next.val == start.val:
+    def removeDuplicates(self, last):
+        start, end = last.next, last.next.next
+
+        while end.next and start.val == end.next.val:
             end = end.next
-        
+
         last.next = end.next
