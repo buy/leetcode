@@ -21,36 +21,40 @@
 #         self.left = None
 #         self.right = None
 
-class Solution:
-    # @param root, a tree node
-    # @return a list of lists of integers
-    def zigzagLevelOrder(self, root, leftToRight = False):
-        if not root:
-            return []
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-        levels, output = [[root]], []
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param {TreeNode} root
+    # @return {integer[][]}
+    def zigzagLevelOrder(self, root):
+        levels, result, leftToRight = [[root]], [], True
 
         while levels:
-            level = levels.pop(0)
-            newLevel = []
-            output.append(map(lambda x: x.val, level))
-            level = level[::-1]
+            curLevel = levels.pop()
+            curValues, nextLevel = [], []
+            for node in curLevel:
+                if node:
+                    curValues.append(node.val)
+                    nextLevel += [node.left, node.right]
 
-            while level:
-                node = level.pop(0)
-                if leftToRight:
-                    left, right = node.left, node.right
-                else:
-                    left, right = node.right, node.left
-
-                if left:
-                    newLevel.append(left)
-                if right:
-                    newLevel.append(right)
-            
-            if newLevel:
-                levels.append(newLevel)
-
+            if not leftToRight:
+                curValues.reverse()
+            if curValues:
+                result.append(curValues)
+            if nextLevel:
+                levels.append(nextLevel)
             leftToRight = not leftToRight
 
-        return output
+        return result

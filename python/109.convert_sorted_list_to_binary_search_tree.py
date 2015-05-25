@@ -1,38 +1,37 @@
 # Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 
-# Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-#
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution:
-    # @param head, a list node
-    # @return a tree node
-    # 12:46
+    # @param {ListNode} head
+    # @return {TreeNode}
     def sortedListToBST(self, head):
         if not head:
             return None
         if not head.next:
             return TreeNode(head.val)
 
-        slow, fast = head, head.next
-
-        while fast.next and fast.next.next:
+        dummyHead = ListNode(0)
+        dummyHead.next = head
+        slow, fast = dummyHead, head
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-        root = slow.next
-        newRoot = TreeNode(root.val)
+        root = TreeNode(slow.next.val)
+        root.right = self.sortedListToBST(slow.next.next)
         slow.next = None
-        newRoot.left = self.sortedListToBST(head)
-        newRoot.right = self.sortedListToBST(root.next)
+        root.left = self.sortedListToBST(head)
 
-        return newRoot
+        return root
