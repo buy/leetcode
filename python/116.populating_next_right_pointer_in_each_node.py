@@ -61,3 +61,33 @@ class Solution:
 
             if newLevel:
                 levels.append(newLevel)
+
+# Definition for binary tree with next pointer.
+# class TreeLinkNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#         self.next = None
+
+class Solution:
+    # @param root, a tree link node
+    # @return nothing
+    def connect(self, root):
+        if not root:
+            return
+
+        levels = [[root]]
+        while levels:
+            level, nextLevel = levels.pop(0), []
+            level += [None]
+            for i in range(len(level) - 1):
+                level[i].next = level[i + 1]
+                if level[i].left:
+                    nextLevel.append(level[i].left)
+                if level[i].right:
+                    nextLevel.append(level[i].right)
+
+            if nextLevel:
+                levels.append(nextLevel)
+
