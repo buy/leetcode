@@ -27,28 +27,33 @@
 #         self.label = x
 #         self.neighbors = []
 
+# Definition for a undirected graph node
+# class UndirectedGraphNode:
+#     def __init__(self, x):
+#         self.label = x
+#         self.neighbors = []
+
 class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
-    # 2:41
     def cloneGraph(self, node):
         if not node:
             return None
 
-        newHead = UndirectedGraphNode(node.label)
-        queue = collections.deque([(node, newHead)])
-        map = {}
+        newNode = UndirectedGraphNode(node.label)
+        queue = collections.deque([(node, newNode)])
+        nodeMap = {}
 
         while queue:
-            cur, newCur = queue.popleft()
-            if cur in map:
+            curNode, newCurNode = queue.popleft()
+            if curNode in nodeMap:
                 continue
+            else:
+                nodeMap[curNode] = newCurNode
 
-            for child in cur.neighbors:
-                newChild = UndirectedGraphNode(child.label)
-                newCur.neighbors.append(newChild)
-                queue.append((child, newChild))
+            for neighbor in curNode.neighbors:
+                newNeighbor = nodeMap.get(neighbor, UndirectedGraphNode(neighbor.label))
+                newCurNode.neighbors.append(newNeighbor)
+                queue.append((neighbor, newNeighbor))
 
-            map[cur] = True
-
-        return newHead
+        return newNode
